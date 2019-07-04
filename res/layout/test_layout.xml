@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/registration_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginEnd="32dp"
+    android:animateLayoutChanges="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingBottom="0dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/labeled_edit_text_background_inactive">
+
+        <Spinner
+            android:id="@+id/country_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
+
+        <org.thoughtcrime.securesms.components.LabeledEditText
+            android:id="@+id/country_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            app:labeledEditText_background="@color/white"
+            app:labeledEditText_textLayout="@layout/country_code_text" />
+
+        <org.thoughtcrime.securesms.components.LabeledEditText
+            android:id="@+id/number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            app:labeledEditText_background="@color/white"
+            app:labeledEditText_label="Phone Number"
+            app:labeledEditText_textLayout="@layout/phone_text" />
+
+    </LinearLayout>
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@color/signal_primary"
+        android:textColor="@color/white"
+        app:cpb_colorIndicator="@color/white"
+        app:cpb_colorProgress="@color/textsecure_primary"
+        app:cpb_cornerRadius="4dp"
+        app:cpb_selectorIdle="@drawable/progress_button_state"
+        app:cpb_textIdle="@string/RegistrationActivity_next" />
+
+    <TextView
+        android:id="@+id/skip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@android:string/cancel"
+        android:textColor="@color/core_grey_60" />
+
+</LinearLayout>
