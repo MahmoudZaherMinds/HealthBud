@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.imageeditor.ColorableRenderer;
@@ -132,8 +133,6 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     if (restoredModel != null) {
       editorModel = restoredModel;
       restoredModel = null;
-    } else if (savedInstanceState != null) {
-      editorModel = new Data(savedInstanceState).readModel();
     }
 
     if (editorModel == null) {
@@ -146,12 +145,6 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     imageEditorView.setModel(editorModel);
 
     refreshUniqueColors();
-  }
-
-  @Override
-  public void onSaveInstanceState(@NonNull Bundle outState) {
-    super.onSaveInstanceState(outState);
-    new Data(outState).writeModel(imageEditorView.getModel());
   }
 
   @Override
