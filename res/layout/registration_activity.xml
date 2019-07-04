@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -13,14 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--Title section -->
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
             android:orientation="vertical">
 
             <TextView
@@ -44,13 +44,14 @@
 
         </LinearLayout>
 
+        <!--backup section -->
         <LinearLayout
             android:id="@+id/restore_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"
             android:orientation="vertical"
             android:paddingBottom="0dp"
@@ -94,6 +95,7 @@
 
             <Button
                 android:id="@+id/skip_restore_button"
+                style="@style/Button.Borderless.Registration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -102,11 +104,11 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="30dp"
                 android:paddingBottom="10dp"
-                style="@style/Button.Borderless.Registration"
                 android:text="@string/registration_activity__skip" />
 
         </LinearLayout>
 
+        <!--phone section -->
         <LinearLayout
             android:id="@+id/registration_container"
             android:layout_width="fill_parent"
@@ -116,10 +118,10 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"
             android:animateLayoutChanges="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="0dp"
-            android:clipToPadding="false"
-            android:clipChildren="false"
             tools:visibility="gone">
 
             <FrameLayout
@@ -146,8 +148,8 @@
                     android:id="@+id/country_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
                     app:labeledEditText_background="@color/white"
                     app:labeledEditText_textLayout="@layout/country_code_text" />
 
@@ -158,7 +160,7 @@
                     android:layout_weight="3"
                     app:labeledEditText_background="@color/white"
                     app:labeledEditText_label="Phone Number"
-                    app:labeledEditText_textLayout="@layout/phone_text"/>
+                    app:labeledEditText_textLayout="@layout/phone_text" />
 
             </LinearLayout>
 
@@ -187,6 +189,7 @@
 
         </LinearLayout>
 
+        <!--verification section -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/verification_container"
             android:layout_width="match_parent"
@@ -218,8 +221,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/code"
-                app:layout_constraintTop_toTopOf="@+id/wrong_number"
-                app:layout_constraintStart_toStartOf="@+id/code" />
+                app:layout_constraintStart_toStartOf="@+id/code"
+                app:layout_constraintTop_toTopOf="@+id/wrong_number" />
 
             <Button
                 android:id="@+id/wrong_number"
@@ -241,7 +244,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <!--PIN section -->
         <LinearLayout
             android:id="@+id/pin_container"
             android:layout_width="match_parent"
