@@ -1559,6 +1559,14 @@
     <string name="prompt_passphrase_activity__tap_to_unlock">TAP TO UNLOCK</string>
     <string name="RegistrationLockDialog_reminder">Reminder:</string>
     <string name="recipient_preferences__about">About</string>
-    <!-- EOF -->
 
+    <!-- my strings values -->
+    <string name="CreateProfileActivity_complete_your_profile">Complete your profile Data</string>
+    <string name="profile_create_activity__your_specialization">Specialization</string>
+    <string name="profile_create_activity__your_qualifications">Qualifications</string>
+    <string name="profile_create_activity__your_clinic_address">Clinic Address</string>
+    <string name="profile_create_activity__your_medical_license">Medical license or Syndicate ID</string>
+
+
+    <!-- EOF -->
 </resources>

@@ -46,6 +46,7 @@ import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.profiles.AvatarHelper;
 import org.thoughtcrime.securesms.profiles.ProfileMediaConstraints;
 import org.thoughtcrime.securesms.profiles.SystemProfileUtil;
+import org.thoughtcrime.securesms.registration.OnboardingActivity;
 import org.thoughtcrime.securesms.util.BitmapDecodingException;
 import org.thoughtcrime.securesms.util.BitmapUtil;
 import org.thoughtcrime.securesms.util.DynamicLanguage;
@@ -436,7 +437,8 @@ public class CreateProfileActivity extends BaseActionBarActivity implements Inje
             @Override
             public void onAnimationEnd(Animator animation) {
                 finishButton.setProgress(0);
-                if (nextIntent != null) startActivity(nextIntent);
+                //  if (nextIntent != null) startActivity(nextIntent);
+                if (nextIntent != null) OnboardingActivity.start(CreateProfileActivity.this);
                 finish();
             }
 

@@ -152,8 +152,8 @@
             app:cpb_colorProgress="@color/textsecure_primary"
             app:cpb_cornerRadius="4dp"
             app:cpb_selectorIdle="@drawable/progress_button_state"
-            app:cpb_textIdle="@string/profile_create_activity__finish" />
-
+            app:cpb_textIdle="@string/RegistrationActivity_next" />
+        <!--app:cpb_textIdle="@string/profile_create_activity__finish"-->
         <Button
             android:id="@+id/skip_button"
             style="@style/Button.Borderless.Registration"
@@ -177,6 +177,6 @@
         android:layout_height="match_parent"
         android:background="@color/textsecure_primary"
         android:visibility="invisible"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 
 </FrameLayout>
