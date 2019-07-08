@@ -78,6 +78,8 @@ import org.thoughtcrime.securesms.service.VerificationCodeParser;
 import org.thoughtcrime.securesms.util.BackupUtil;
 import org.thoughtcrime.securesms.util.DateUtils;
 import org.thoughtcrime.securesms.util.Dialogs;
+import org.thoughtcrime.securesms.util.GenaralUtils.Constants;
+import org.thoughtcrime.securesms.util.GenaralUtils.GenaralUtils;
 import org.thoughtcrime.securesms.util.PlayServicesUtil;
 import org.thoughtcrime.securesms.util.PlayServicesUtil.PlayServicesStatus;
 import org.thoughtcrime.securesms.util.ServiceUtil;
@@ -473,6 +475,7 @@ public class RegistrationActivity extends BaseActionBarActivity implements Verif
         }
     }
 
+    // request verification code with phone number
     @SuppressLint("StaticFieldLeak")
     private void requestVerificationCode(@NonNull String e164number, boolean gcmSupported, boolean smsRetrieverSupported) {
         new AsyncTask<Void, Void, VerificationRequestResult>() {
@@ -510,6 +513,10 @@ public class RegistrationActivity extends BaseActionBarActivity implements Verif
                     createButton.setIndeterminateProgressMode(false);
                     createButton.setProgress(0);
                 } else {
+
+                    // this mean this step done successfully // store phone number
+                    GenaralUtils.cacheString(RegistrationActivity.this, Constants.USER_PHONE, e164number);
+
                     registrationState = new RegistrationState(RegistrationState.State.VERIFYING, e164number, result.password, result.fcmToken, Optional.absent());
                     displayVerificationView(e164number, 64);
                 }

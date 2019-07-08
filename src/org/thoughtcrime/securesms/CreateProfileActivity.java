@@ -46,12 +46,13 @@ import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.profiles.AvatarHelper;
 import org.thoughtcrime.securesms.profiles.ProfileMediaConstraints;
 import org.thoughtcrime.securesms.profiles.SystemProfileUtil;
-import org.thoughtcrime.securesms.registration.OnboardingActivity;
 import org.thoughtcrime.securesms.util.BitmapDecodingException;
 import org.thoughtcrime.securesms.util.BitmapUtil;
 import org.thoughtcrime.securesms.util.DynamicLanguage;
 import org.thoughtcrime.securesms.util.DynamicRegistrationTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
+import org.thoughtcrime.securesms.util.GenaralUtils.Constants;
+import org.thoughtcrime.securesms.util.GenaralUtils.GenaralUtils;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
 import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.ViewUtil;
@@ -357,11 +358,19 @@ public class CreateProfileActivity extends BaseActionBarActivity implements Inje
         final StreamDetails avatar;
 
         if (TextUtils.isEmpty(this.name.getText().toString())) name = null;
-        else name = this.name.getText().toString();
-
+        else {
+            name = this.name.getText().toString();
+            // this mean this step done successfully // store user name & pic
+            GenaralUtils.cacheString(CreateProfileActivity.this, Constants.USER_NAME, name);
+        }
         if (avatarBytes == null || avatarBytes.length == 0) avatar = null;
-        else avatar = new StreamDetails(new ByteArrayInputStream(avatarBytes),
-                "image/jpeg", avatarBytes.length);
+        else {
+            avatar = new StreamDetails(new ByteArrayInputStream(avatarBytes),
+                    "image/jpeg", avatarBytes.length);
+
+            // this mean this step done successfully // store user name & pic
+            // GenaralUtils.cacheString(CreateProfileActivity.this, Constants.USER_AVATAR, avatar.toString());
+        }
 
         new AsyncTask<Void, Void, Boolean>() {
             @Override
@@ -437,8 +446,8 @@ public class CreateProfileActivity extends BaseActionBarActivity implements Inje
             @Override
             public void onAnimationEnd(Animator animation) {
                 finishButton.setProgress(0);
-                //  if (nextIntent != null) startActivity(nextIntent);
-                if (nextIntent != null) OnboardingActivity.start(CreateProfileActivity.this);
+                if (nextIntent != null) startActivity(nextIntent);
+                //if (nextIntent != null) OnboardingActivity.start(CreateProfileActivity.this);
                 finish();
             }
 
