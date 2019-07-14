@@ -1567,6 +1567,9 @@
     <string name="profile_create_activity__your_clinic_address">Clinic Address</string>
     <string name="profile_create_activity__your_medical_license">Medical license or Syndicate ID</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <!-- EOF -->
 </resources>

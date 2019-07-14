@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,6 +39,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.TooltipCompat;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.tabs.TabLayout;
 
 import org.thoughtcrime.securesms.color.MaterialColor;
 import org.thoughtcrime.securesms.components.RatingManager;
@@ -49,6 +51,7 @@ import org.thoughtcrime.securesms.conversation.ConversationActivity;
 import org.thoughtcrime.securesms.database.Address;
 import org.thoughtcrime.securesms.database.DatabaseFactory;
 import org.thoughtcrime.securesms.database.MessagingDatabase.MarkedMessageInfo;
+import org.thoughtcrime.securesms.homescreen.fragments.DoctorsFragment;
 import org.thoughtcrime.securesms.lock.RegistrationLockDialog;
 import org.thoughtcrime.securesms.mms.GlideApp;
 import org.thoughtcrime.securesms.notifications.MarkReadReceiver;
@@ -78,6 +81,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 
     private ConversationListFragment conversationListFragment;
     private SearchFragment searchFragment;
+    private DoctorsFragment doctorsFragment;
     private SearchToolbar searchToolbar;
     private ImageView searchAction;
     private ViewGroup fragmentContainer;
@@ -101,11 +105,54 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
         conversationListFragment = initFragment(R.id.fragment_container, new ConversationListFragment(), dynamicLanguage.getCurrentLocale());
 
         initializeSearchListener();
+        // to initialize tabbed layout chats and doctors.
+        initializeTabbedListener();
 
         RatingManager.showRatingDialogIfNecessary(this);
         RegistrationLockDialog.showReminderIfNecessary(this);
 
         TooltipCompat.setTooltipText(searchAction, getText(R.string.SearchToolbar_search_for_conversations_contacts_and_messages));
+    }
+
+    private void initializeTabbedListener() {
+
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Chats"));
+        tabLayout.addTab(tabLayout.newTab().setText("Doctors"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
+        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+        tabLayout.setTabTextColors(Color.parseColor("#ff595959"), Color.parseColor("#ffffff"));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    conversationListFragment = initFragment(R.id.fragment_container, new ConversationListFragment(), dynamicLanguage.getCurrentLocale());
+
+                } else if (tab.getPosition() == 1) {
+                    if (doctorsFragment == null) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new DoctorsFragment(), null)
+                                .commit();
+                    }
+                } else {
+                    Toast.makeText(ConversationListActivity.this, "not", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -146,11 +193,11 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
         String lisence = GenaralUtils.getCachedString(ConversationListActivity.this, Constants.USER_ID, " lisence not found");
 
         // show them to make sure
-        GenaralUtils.showLongToast(ConversationListActivity.this, "user name: " + name);
-        GenaralUtils.showLongToast(ConversationListActivity.this, "phone: " + phone);
-        GenaralUtils.showLongToast(ConversationListActivity.this, "Specialization: " + specialization);
-        GenaralUtils.showLongToast(ConversationListActivity.this, "qualification: " + qualification);
-        GenaralUtils.showLongToast(ConversationListActivity.this, "licence:" + lisence);
+//        GenaralUtils.showLongToast(ConversationListActivity.this, "user name: " + name);
+//        GenaralUtils.showLongToast(ConversationListActivity.this, "phone: " + phone);
+//        GenaralUtils.showLongToast(ConversationListActivity.this, "Specialization: " + specialization);
+//        GenaralUtils.showLongToast(ConversationListActivity.this, "qualification: " + qualification);
+//        GenaralUtils.showLongToast(ConversationListActivity.this, "licence:" + lisence);
 
 
         searchAction.setOnClickListener(v -> {
