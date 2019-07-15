@@ -42,7 +42,7 @@ public class NewConversationActivity extends ContactSelectionActivity {
     @SuppressWarnings("unused")
     private static final String TAG = NewConversationActivity.class.getSimpleName();
     private static final String TAB_NAME = null;
-    private String tabName = "";
+    public static String tabName = "";
 
 
     public static void start(Context context, String tab) {
@@ -91,7 +91,10 @@ public class NewConversationActivity extends ContactSelectionActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                super.onBackPressed();
+                if (tabName.equals("doctors_tab")) {
+                    ConversationListActivity.start(this);
+                } else
+                    super.onBackPressed();
                 return true;
             case R.id.menu_refresh:
                 handleManualRefresh();
@@ -132,11 +135,9 @@ public class NewConversationActivity extends ContactSelectionActivity {
     @Override
     public void onBackPressed() {
         if (tabName.equals("doctors_tab")) {
-            // return;
-            startActivity(new Intent(NewConversationActivity.this, ConversationListActivity.class));
-            return;
-        }
-        super.onBackPressed();
+            ConversationListActivity.start(this);
+        } else
+            super.onBackPressed();
 
     }
 }

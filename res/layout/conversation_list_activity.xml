@@ -61,10 +61,7 @@
         android:layout_below="@+id/toolbar"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize">
-
-
-    </com.google.android.material.tabs.TabLayout>
+        android:minHeight="?attr/actionBarSize" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

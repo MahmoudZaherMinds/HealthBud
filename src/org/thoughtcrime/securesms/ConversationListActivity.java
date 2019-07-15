@@ -87,6 +87,12 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
     private ImageView searchAction;
     private ViewGroup fragmentContainer;
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, ConversationListActivity.class);
+        starter.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onPreCreate() {
         dynamicTheme.onCreate(this);
@@ -142,6 +148,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
 //                                .commit();
                     // startActivity(new Intent(ConversationListActivity.this, NewConversationActivity.class));
                     NewConversationActivity.start(ConversationListActivity.this, "doctors_tab");
+                    finish();
                     //                  }
                 } else {
                     Toast.makeText(ConversationListActivity.this, "not", Toast.LENGTH_SHORT).show();
