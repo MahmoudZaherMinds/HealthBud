@@ -70,6 +70,7 @@ import org.thoughtcrime.securesms.util.concurrent.SimpleTask;
 import org.whispersystems.libsignal.util.guava.Optional;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ConversationListActivity extends PassphraseRequiredActionBarActivity
         implements ConversationListFragment.ConversationSelectedListener {
@@ -125,18 +126,23 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#ff595959"), Color.parseColor("#ffffff"));
 
+        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                // if pos = 0 means chat fragment is open
                 if (tab.getPosition() == 0) {
                     conversationListFragment = initFragment(R.id.fragment_container, new ConversationListFragment(), dynamicLanguage.getCurrentLocale());
 
                 } else if (tab.getPosition() == 1) {
-                    if (doctorsFragment == null) {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new DoctorsFragment(), null)
-                                .commit();
-                    }
+                    // if pos = 1 means doctors fragment is open
+//                    if (doctorsFragment == null) {
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.fragment_container, new DoctorsFragment(), null)
+//                                .commit();
+                    // startActivity(new Intent(ConversationListActivity.this, NewConversationActivity.class));
+                    NewConversationActivity.start(ConversationListActivity.this, "doctors_tab");
+                    //                  }
                 } else {
                     Toast.makeText(ConversationListActivity.this, "not", Toast.LENGTH_SHORT).show();
 

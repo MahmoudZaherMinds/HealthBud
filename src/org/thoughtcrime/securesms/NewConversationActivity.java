@@ -16,6 +16,7 @@
  */
 package org.thoughtcrime.securesms;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,74 +30,113 @@ import org.thoughtcrime.securesms.database.DatabaseFactory;
 import org.thoughtcrime.securesms.database.ThreadDatabase;
 import org.thoughtcrime.securesms.recipients.Recipient;
 
+import java.util.Objects;
+
 /**
  * Activity container for starting a new conversation.
  *
  * @author Moxie Marlinspike
- *
  */
 public class NewConversationActivity extends ContactSelectionActivity {
 
-  @SuppressWarnings("unused")
-  private static final String TAG = NewConversationActivity.class.getSimpleName();
+    @SuppressWarnings("unused")
+    private static final String TAG = NewConversationActivity.class.getSimpleName();
+    private static final String TAB_NAME = null;
+    private String tabName = "";
 
-  @Override
-  public void onCreate(Bundle bundle, boolean ready) {
-    super.onCreate(bundle, ready);
-    assert getSupportActionBar() != null;
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-  }
 
-  @Override
-  public void onContactSelected(String number) {
-    Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
-
-    Intent intent = new Intent(this, ConversationActivity.class);
-    intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
-    intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
-    intent.setDataAndType(getIntent().getData(), getIntent().getType());
-
-    long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
-
-    intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
-    intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
-    startActivity(intent);
-    finish();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    super.onOptionsItemSelected(item);
-
-    switch (item.getItemId()) {
-    case android.R.id.home:   super.onBackPressed(); return true;
-    case R.id.menu_refresh:   handleManualRefresh(); return true;
-    case R.id.menu_new_group: handleCreateGroup();   return true;
-    case R.id.menu_invite:    handleInvite();        return true;
+    public static void start(Context context, String tab) {
+        Intent starter = new Intent(context, NewConversationActivity.class);
+        starter.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle b = new Bundle();
+        b.putString(TAB_NAME, tab);
+        starter.putExtras(b);
+        context.startActivity(starter);
     }
 
-    return false;
-  }
 
-  private void handleManualRefresh() {
-    contactsFragment.setRefreshing(true);
-    onRefresh();
-  }
+    @Override
+    public void onCreate(Bundle bundle, boolean ready) {
+        super.onCreate(bundle, ready);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-  private void handleCreateGroup() {
-    startActivity(new Intent(this, GroupCreateActivity.class));
-  }
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        if (Objects.equals(extras.getString(TAB_NAME), "doctors_tab")) {
+            tabName = extras.getString(TAB_NAME);
+        }
+    }
 
-  private void handleInvite() {
-    startActivity(new Intent(this, InviteActivity.class));
-  }
+    @Override
+    public void onContactSelected(String number) {
+        Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
 
-  @Override
-  protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-    MenuInflater inflater = this.getMenuInflater();
-    menu.clear();
-    inflater.inflate(R.menu.new_conversation_activity, menu);
-    super.onPrepareOptionsMenu(menu);
-    return true;
-  }
+        Intent intent = new Intent(this, ConversationActivity.class);
+        intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
+        intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
+        intent.setDataAndType(getIntent().getData(), getIntent().getType());
+
+        long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
+
+        intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
+        intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            case R.id.menu_refresh:
+                handleManualRefresh();
+                return true;
+            case R.id.menu_new_group:
+                handleCreateGroup();
+                return true;
+            case R.id.menu_invite:
+                handleInvite();
+                return true;
+        }
+
+        return false;
+    }
+
+    private void handleManualRefresh() {
+        contactsFragment.setRefreshing(true);
+        onRefresh();
+    }
+
+    private void handleCreateGroup() {
+        startActivity(new Intent(this, GroupCreateActivity.class));
+    }
+
+    private void handleInvite() {
+        startActivity(new Intent(this, InviteActivity.class));
+    }
+
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        MenuInflater inflater = this.getMenuInflater();
+        menu.clear();
+        inflater.inflate(R.menu.new_conversation_activity, menu);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (tabName.equals("doctors_tab")) {
+            // return;
+            startActivity(new Intent(NewConversationActivity.this, ConversationListActivity.class));
+            return;
+        }
+        super.onBackPressed();
+
+    }
 }
