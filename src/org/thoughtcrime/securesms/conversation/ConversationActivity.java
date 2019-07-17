@@ -254,6 +254,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
         ConversationSearchBottomBar.EventListener,
         StickerKeyboardProvider.StickerEventListener {
     public static final String ADDRESS_EXTRA = "address";
+    public static final String PHONE = "phone";
     public static final String THREAD_ID_EXTRA = "thread_id";
     public static final String IS_ARCHIVED_EXTRA = "is_archived";
     public static final String TEXT_EXTRA = "draft_text";
@@ -787,10 +788,10 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
             // I add this line as when back it exit from the app because i'm add finish in the doctor tab in conversationListActivity
             // and I have cleared the stack so i create new activity
             //Note: I made it static to be sharable through all activities
-            if (tabName.equals("doctors_tab")) {
-                ConversationListActivity.start(this);
-            } else
-                super.onBackPressed();
+//            if (tabName.equals("doctors_tab")) {
+//                ConversationListActivity.start(this);
+//            } else
+            super.onBackPressed();
         }
 
     }
@@ -813,10 +814,17 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
     //////// Event Handlers
 
     private void handleReturnToConversationList() {
-        Intent intent = new Intent(this, (archived ? ConversationListArchiveActivity.class : ConversationListActivity.class));
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        if (tabName.equals("doctors_tab")) {
+            // this mean that he open conversation from doctors tab and should just back to doctors profile
+            super.onBackPressed();
+        } else {
+            // this mean that he open conversation from chat tab
+            Intent intent = new Intent(this, (archived ? ConversationListArchiveActivity.class : ConversationListActivity.class));
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     private void handleSelectMessageExpiration() {

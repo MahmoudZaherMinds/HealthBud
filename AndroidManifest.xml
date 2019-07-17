@@ -98,7 +98,10 @@
         android:supportsRtl="true"
         android:theme="@style/TextSecure.LightTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".registration.OnboardingActivity"></activity>
+        <activity
+            android:name=".DoctorContactProfileScreen"
+            android:label="@string/profile" />
+        <activity android:name=".registration.OnboardingActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

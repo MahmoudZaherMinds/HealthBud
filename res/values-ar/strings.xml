@@ -1301,6 +1301,7 @@
     <string name="profile_create_activity__your_qualifications">Qualifications</string>
     <string name="profile_create_activity__your_clinic_address">Clinic Address</string>
     <string name="profile_create_activity__your_medical_license">Medical license or Syndicate ID</string>
+    <string name="profile">Profile</string>
 
     <!--EOF-->
 </resources>

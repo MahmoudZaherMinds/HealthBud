@@ -70,19 +70,38 @@ public class NewConversationActivity extends ContactSelectionActivity {
 
     @Override
     public void onContactSelected(String number) {
-        Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
+        if (tabName.equals("doctors_tab")) {
+            Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
 
-        Intent intent = new Intent(this, ConversationActivity.class);
-        intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
-        intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
-        intent.setDataAndType(getIntent().getData(), getIntent().getType());
+            Intent intent = new Intent(this, DoctorContactProfileScreen.class);
+            intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
+            intent.putExtra(ConversationActivity.PHONE, recipient.getAddress());
+            intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
+            intent.setDataAndType(getIntent().getData(), getIntent().getType());
 
-        long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
+            long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
 
-        intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
-        intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
-        startActivity(intent);
-        finish();
+            intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
+            intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
+            startActivity(intent);
+            //    finish();
+        } else {
+            Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
+
+            Intent intent = new Intent(this, ConversationActivity.class);
+            //Intent intent = new Intent(this, DoctorContactProfileScreen.class);
+            intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
+            intent.putExtra(ConversationActivity.PHONE, recipient.getAddress());
+            intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
+            intent.setDataAndType(getIntent().getData(), getIntent().getType());
+
+            long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
+
+            intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
+            intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
