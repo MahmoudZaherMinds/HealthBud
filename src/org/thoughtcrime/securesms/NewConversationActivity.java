@@ -74,15 +74,7 @@ public class NewConversationActivity extends ContactSelectionActivity {
             Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
 
             Intent intent = new Intent(this, DoctorContactProfileScreen.class);
-            intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
-            intent.putExtra(ConversationActivity.PHONE, recipient.getAddress());
-            intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
-            intent.setDataAndType(getIntent().getData(), getIntent().getType());
-
-            long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
-
-            intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
-            intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
+            intent.putExtra(RecipientPreferenceActivity.ADDRESS_EXTRA, recipient.getAddress());
             startActivity(intent);
             //    finish();
         } else {

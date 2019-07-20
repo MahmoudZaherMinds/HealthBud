@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="about"
+        android:title="@string/recipient_preferences__about">
+        <org.thoughtcrime.securesms.preferences.widgets.ContactPreference
+            android:key="pref_key_number"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="about_divider"
+        android:layout="@layout/preference_divider" />
+
+    <PreferenceCategory
+        android:key="notification_settings"
+        android:title="@string/recipient_preferences__chat_settings">
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:disableDependentsState="true"
+            android:key="pref_key_recipient_mute"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__mute_conversation" />
+
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_key_recipient_custom_notifications"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__custom_notifications" />
+
+        <org.thoughtcrime.securesms.preferences.widgets.SignalPreference
+            android:dependency="pref_key_recipient_mute"
+            android:key="pref_key_recipient_ringtone"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__notification_sound" />
+
+        <org.thoughtcrime.securesms.preferences.widgets.SignalListPreference
+            android:defaultValue="0"
+            android:dependency="pref_key_recipient_mute"
+            android:entries="@array/recipient_vibrate_entries"
+            android:entryValues="@array/recipient_vibrate_values"
+            android:key="pref_key_recipient_vibrate"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__vibrate" />
+
+        <org.thoughtcrime.securesms.preferences.widgets.ColorPickerPreference
+            android:defaultValue="@android:color/black"
+            android:key="pref_key_recipient_color"
+            android:negativeButtonText="@null"
+            android:persistent="false"
+            android:positiveButtonText="@null"
+            android:title="@string/recipient_preferences__color"
+            app:numColumns="5" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:layout="@layout/preference_divider" />
+
+    <PreferenceCategory
+        android:key="call_settings"
+        android:title="@string/recipient_preferences__call_settings">
+
+        <org.thoughtcrime.securesms.preferences.widgets.SignalPreference
+            android:key="pref_key_recipient_call_ringtone"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__ringtone" />
+
+        <org.thoughtcrime.securesms.preferences.widgets.SignalListPreference
+            android:defaultValue="0"
+            android:entries="@array/recipient_vibrate_entries"
+            android:entryValues="@array/recipient_vibrate_values"
+            android:key="pref_key_recipient_call_vibrate"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__vibrate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="divider"
+        android:layout="@layout/preference_divider" />
+
+    <PreferenceCategory
+        android:key="privacy_settings"
+        android:title="@string/recipient_preferences__privacy">
+
+        <Preference
+            android:enabled="false"
+            android:key="pref_key_recipient_identity"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__view_safety_number" />
+
+        <Preference
+            android:key="pref_key_recipient_block"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__block" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
