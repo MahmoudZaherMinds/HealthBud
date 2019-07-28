@@ -12,7 +12,7 @@ import androidx.preference.PreferenceViewHolder;
 
 import org.thoughtcrime.securesms.R;
 
-public class ContactPreference extends Preference {
+public class ContactPreferenceProfileDoc extends Preference {
 
     private ImageView messageButton;
     private ImageView callButton;
@@ -21,28 +21,28 @@ public class ContactPreference extends Preference {
     private Listener listener;
     private boolean secure;
 
-    public ContactPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ContactPreferenceProfileDoc(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initialize();
     }
 
-    public ContactPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ContactPreferenceProfileDoc(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize();
     }
 
-    public ContactPreference(Context context, AttributeSet attrs) {
+    public ContactPreferenceProfileDoc(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize();
     }
 
-    public ContactPreference(Context context) {
+    public ContactPreferenceProfileDoc(Context context) {
         super(context);
         initialize();
     }
 
     private void initialize() {
-        setWidgetLayoutResource(R.layout.recipient_preference_contact_widget);
+        setWidgetLayoutResource(R.layout.recipient_preference_contact_widget_profile_doc);
     }
 
     @Override
@@ -52,6 +52,9 @@ public class ContactPreference extends Preference {
         this.messageButton = (ImageView) view.findViewById(R.id.message);
         this.callButton = (ImageView) view.findViewById(R.id.call);
         this.secureCallButton = (ImageView) view.findViewById(R.id.secure_call);
+
+//        LinearLayout containerLn = (LinearLayout) view.findViewById(R.id.container);
+//        containerLn.setGravity(Gravity.CENTER);
 
         if (listener != null) setListener(listener);
         setSecure(secure);

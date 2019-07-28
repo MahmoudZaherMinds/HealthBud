@@ -34,6 +34,17 @@
                 android:background="@drawable/recipient_preference_scrim_top"
                 app:layout_collapseMode="pin" />
 
+            <ImageView
+                android:id="@+id/img_verified2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/image"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/verfied_icon"
+                app:srcCompat="@drawable/ic_verified_user_24dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="98dp"
@@ -49,6 +60,15 @@
                 android:background="@color/transparent"
                 android:theme="@style/TextSecure.LightActionBar"
                 app:layout_collapseMode="pin">
+
+                <!--<ImageView-->
+                <!--android:id="@+id/img_verified"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:visibility="invisible"-->
+                <!--android:contentDescription="@string/verfied_icon"-->
+                <!--app:srcCompat="@drawable/ic_verified_user_24dp" />-->
 
             </androidx.appcompat.widget.Toolbar>
 

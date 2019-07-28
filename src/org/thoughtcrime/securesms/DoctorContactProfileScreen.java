@@ -45,14 +45,12 @@ import org.thoughtcrime.securesms.contacts.avatars.ContactPhoto;
 import org.thoughtcrime.securesms.contacts.avatars.FallbackContactPhoto;
 import org.thoughtcrime.securesms.contacts.avatars.ProfileContactPhoto;
 import org.thoughtcrime.securesms.contacts.avatars.ResourceContactPhoto;
-import org.thoughtcrime.securesms.conversation.ConversationActivity;
 import org.thoughtcrime.securesms.crypto.IdentityKeyParcelable;
 import org.thoughtcrime.securesms.database.Address;
 import org.thoughtcrime.securesms.database.DatabaseFactory;
 import org.thoughtcrime.securesms.database.GroupDatabase;
 import org.thoughtcrime.securesms.database.IdentityDatabase;
 import org.thoughtcrime.securesms.database.RecipientDatabase;
-import org.thoughtcrime.securesms.database.ThreadDatabase;
 import org.thoughtcrime.securesms.database.loaders.ThreadMediaLoader;
 import org.thoughtcrime.securesms.jobs.MultiDeviceBlockedUpdateJob;
 import org.thoughtcrime.securesms.jobs.MultiDeviceContactUpdateJob;
@@ -65,7 +63,7 @@ import org.thoughtcrime.securesms.notifications.NotificationChannels;
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.preferences.CorrectedPreferenceFragment;
 import org.thoughtcrime.securesms.preferences.widgets.ColorPickerPreference;
-import org.thoughtcrime.securesms.preferences.widgets.ContactPreference;
+import org.thoughtcrime.securesms.preferences.widgets.ContactPreferenceProfileDoc;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientModifiedListener;
 import org.thoughtcrime.securesms.sms.MessageSender;
@@ -108,7 +106,6 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
     public TextView threadPhotoRailLabel;
     public ThreadPhotoRailView threadPhotoRailView;
     public CollapsingToolbarLayout toolbarLayout;
-    String number;
 
     @Override
     public void onPreCreate() {
@@ -195,10 +192,15 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
             startActivity(intent);
         });
 
+
         Toolbar toolbar = ViewUtil.findById(this, R.id.toolbar);
         setSupportActionBar(toolbar);
+        // set back arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setLogo(null);
+
+//        imgVerified.setVisibility(View.VISIBLE);
+
+        // getSupportActionBar().setLogo(getResources().getDrawable(R.drawable.ic_verified_user_24dp));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -224,6 +226,7 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
 
         this.avatar.setBackgroundColor(recipient.getColor().toActionBarColor(this));
         this.toolbarLayout.setTitle(recipient.toShortString());
+
         this.toolbarLayout.setContentScrimColor(recipient.getColor().toActionBarColor(this));
     }
 
@@ -260,20 +263,20 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
         this.threadPhotoRailView.setCursor(glideRequests, null);
     }
 
-    private void callConversationActivity() {
-        Recipient recipient = Recipient.from(this, Address.fromExternal(this, "+201124211911"), true);
-
-        Intent intent = new Intent(this, ConversationActivity.class);
-        intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
-        intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
-        intent.setDataAndType(getIntent().getData(), getIntent().getType());
-
-        long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
-
-        intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
-        intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
-        startActivity(intent);
-    }
+//    private void callConversationActivity() {
+//        Recipient recipient = Recipient.from(this, Address.fromExternal(this, "+201124211911"), true);
+//
+//        Intent intent = new Intent(this, ConversationActivity.class);
+//        intent.putExtra(ConversationActivity.ADDRESS_EXTRA, recipient.getAddress());
+//        intent.putExtra(ConversationActivity.TEXT_EXTRA, getIntent().getStringExtra(ConversationActivity.TEXT_EXTRA));
+//        intent.setDataAndType(getIntent().getData(), getIntent().getType());
+//
+//        long existingThread = DatabaseFactory.getThreadDatabase(this).getThreadIdIfExistsFor(recipient);
+//
+//        intent.putExtra(ConversationActivity.THREAD_ID_EXTRA, existingThread);
+//        intent.putExtra(ConversationActivity.DISTRIBUTION_TYPE_EXTRA, ThreadDatabase.DistributionTypes.DEFAULT);
+//        startActivity(intent);
+//    }
 
     public static class RecipientPreferenceFragment
             extends CorrectedPreferenceFragment
@@ -335,7 +338,7 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
                     .setOnPreferenceClickListener(new DoctorContactProfileScreen.RecipientPreferenceFragment.BlockClickedListener());
             this.findPreference(PREFERENCE_COLOR)
                     .setOnPreferenceChangeListener(new DoctorContactProfileScreen.RecipientPreferenceFragment.ColorChangeListener());
-            ((ContactPreference) this.findPreference(PREFERENCE_ABOUT))
+            ((ContactPreferenceProfileDoc) this.findPreference(PREFERENCE_ABOUT))
                     .setListener(new DoctorContactProfileScreen.RecipientPreferenceFragment.AboutNumberClickedListener());
         }
 
@@ -391,9 +394,9 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
             Preference blockPreference = this.findPreference(PREFERENCE_BLOCK);
             Preference identityPreference = this.findPreference(PREFERENCE_IDENTITY);
             PreferenceCategory callCategory = (PreferenceCategory) this.findPreference("call_settings");
-            PreferenceCategory aboutCategory = (PreferenceCategory) this.findPreference("about");
+            // PreferenceCategory aboutCategory = (PreferenceCategory) this.findPreference("about");
             PreferenceCategory aboutDivider = (PreferenceCategory) this.findPreference("about_divider");
-            ContactPreference aboutPreference = (ContactPreference) this.findPreference(PREFERENCE_ABOUT);
+            ContactPreferenceProfileDoc aboutPreference = (ContactPreferenceProfileDoc) this.findPreference(PREFERENCE_ABOUT);
             PreferenceCategory privacyCategory = (PreferenceCategory) this.findPreference("privacy_settings");
             PreferenceCategory divider = (PreferenceCategory) this.findPreference("divider");
 
@@ -418,7 +421,7 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
                 vibrateMessagePreference.setVisible(false);
 
                 if (identityPreference != null) identityPreference.setVisible(false);
-                if (aboutCategory != null) aboutCategory.setVisible(false);
+                //    if (aboutCategory != null) aboutCategory.setVisible(false);
                 if (aboutDivider != null) aboutDivider.setVisible(false);
                 if (privacyCategory != null) privacyCategory.setVisible(false);
                 if (divider != null) divider.setVisible(false);
@@ -428,14 +431,16 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
                 if (colorPreference != null) colorPreference.setVisible(false);
                 if (identityPreference != null) identityPreference.setVisible(false);
                 if (callCategory != null) callCategory.setVisible(false);
-                if (aboutCategory != null) aboutCategory.setVisible(false);
+                //   if (aboutCategory != null) aboutCategory.setVisible(false);
                 if (aboutDivider != null) aboutDivider.setVisible(false);
                 if (divider != null) divider.setVisible(false);
             } else {
                 colorPreference.setColors(MaterialColors.CONVERSATION_PALETTE.asConversationColorArray(getActivity()));
                 colorPreference.setColor(recipient.getColor().toActionBarColor(getActivity()));
 
-                aboutPreference.setTitle(formatAddress(recipient.getAddress()));
+                // to hide phone number from user
+                //aboutPreference.setTitle(formatAddress(recipient.getAddress()));
+
                 aboutPreference.setSummary(recipient.getCustomLabel());
                 aboutPreference.setSecure(recipient.getRegistered() == RecipientDatabase.RegisteredState.REGISTERED);
 
@@ -809,7 +814,7 @@ public class DoctorContactProfileScreen extends PassphraseRequiredActionBarActiv
             }
         }
 
-        private class AboutNumberClickedListener implements ContactPreference.Listener {
+        private class AboutNumberClickedListener implements ContactPreferenceProfileDoc.Listener {
 
             @Override
             public void onMessageClicked() {

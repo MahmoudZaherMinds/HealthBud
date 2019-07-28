@@ -414,7 +414,8 @@ public class RecipientPreferenceActivity extends PassphraseRequiredActionBarActi
                 colorPreference.setColors(MaterialColors.CONVERSATION_PALETTE.asConversationColorArray(getActivity()));
                 colorPreference.setColor(recipient.getColor().toActionBarColor(getActivity()));
 
-                aboutPreference.setTitle(formatAddress(recipient.getAddress()));
+                // to hide phone number from user
+                // aboutPreference.setTitle(formatAddress(recipient.getAddress()));
                 aboutPreference.setSummary(recipient.getCustomLabel());
                 aboutPreference.setSecure(recipient.getRegistered() == RecipientDatabase.RegisteredState.REGISTERED);
 

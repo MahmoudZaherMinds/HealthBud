@@ -72,7 +72,6 @@ public class NewConversationActivity extends ContactSelectionActivity {
     public void onContactSelected(String number) {
         if (tabName.equals("doctors_tab")) {
             Recipient recipient = Recipient.from(this, Address.fromExternal(this, number), true);
-
             Intent intent = new Intent(this, DoctorContactProfileScreen.class);
             intent.putExtra(RecipientPreferenceActivity.ADDRESS_EXTRA, recipient.getAddress());
             startActivity(intent);

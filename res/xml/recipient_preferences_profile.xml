@@ -2,12 +2,37 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <!--<PreferenceCategory-->
+    <!--android:key="about"-->
+    <!--android:title="@string/recipient_preferences__about">-->
+
+    <org.thoughtcrime.securesms.preferences.widgets.ContactPreferenceProfileDoc
+        android:key="pref_key_number"
+        android:persistent="false" />
+    <!--</PreferenceCategory>-->
+    <PreferenceCategory
+        android:key="about_divider"
+        android:layout="@layout/preference_divider" />
+
     <PreferenceCategory
         android:key="about"
         android:title="@string/recipient_preferences__about">
-        <org.thoughtcrime.securesms.preferences.widgets.ContactPreference
-            android:key="pref_key_number"
-            android:persistent="false" />
+
+        <Preference
+            android:key="pref_key_recipient_qualification"
+            android:persistent="false"
+            android:title="@string/recipient_preferences__qualification" />
+        <Preference
+            android:key="pref_key_recipient_clinic_address"
+            android:persistent="false"
+            android:title="@string/recipient_preferences_clinic__address" />
+        <Preference
+            android:key="pref_key_recipient_clinic_phone"
+            android:persistent="false"
+            android:title="@string/recipient_preferences_clinic__phone" />
+
+
     </PreferenceCategory>
 
     <PreferenceCategory

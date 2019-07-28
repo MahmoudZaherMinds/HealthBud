@@ -1302,6 +1302,10 @@
     <string name="profile_create_activity__your_clinic_address">Clinic Address</string>
     <string name="profile_create_activity__your_medical_license">Medical license or Syndicate ID</string>
     <string name="profile">Profile</string>
+    <string name="recipient_preferences__qualification">Qualifications</string>
+    <string name="recipient_preferences_clinic__address">Clinic Address</string>
+    <string name="recipient_preferences_clinic__phone">Clinic Phone</string>
+    <string name="verfied_icon">verified icon</string>
 
     <!--EOF-->
 </resources>
